@@ -10,4 +10,16 @@ body {
   /* Add your background pattern here */
   background-image: radial-gradient( #318a2b 85%, #1c561a 90%,#2b8027 40%);
   background-size: 50px 50px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-top: 4rem;
+  margin-bottom: 5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
