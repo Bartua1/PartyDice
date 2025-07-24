@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Import useEffect
+
 import { Wheel } from 'react-custom-roulette';
 
 const casinoData = [
@@ -19,6 +20,31 @@ const casinoData = [
 const CasinoRoulette = () => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
+  const [wheelSize, setWheelSize] = useState(0); // New state for dynamic size
+
+  // useEffect to calculate wheel size based on window width
+  useEffect(() => {
+    const calculateWheelSize = () => {
+      // Calculate 90% of the viewport width
+      let size = window.innerWidth * 0.9;
+
+      // Optional: Add a maximum size for desktop screens
+      // This prevents the wheel from becoming too big on very wide monitors.
+      const MAX_WHEEL_SIZE = 550; // Max width in pixels (adjust as needed)
+      if (size > MAX_WHEEL_SIZE) {
+        size = MAX_WHEEL_SIZE;
+      }
+      setWheelSize(size);
+    };
+
+    calculateWheelSize(); // Set initial size on component mount
+
+    // Add event listener for window resize to update the size
+    window.addEventListener('resize', calculateWheelSize);
+
+    // Clean up the event listener when the component unmounts
+    return () => window.removeEventListener('resize', calculateWheelSize);
+  }, []); // Empty dependency array means this effect runs once on mount and cleans up on unmount
 
   const handleWheelClick = () => {
     if (!mustSpin) {
@@ -28,10 +54,18 @@ const CasinoRoulette = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-green-800 flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-white mb-8">Party Roulette</h1>
+  // Optionally, you can render a loading state until wheelSize is calculated
+  if (wheelSize === 0) {
+    return (
+      <div className="min-h-screen bg-green-800 flex items-center justify-center text-white">
+        Loading roulette...
+      </div>
+    );
+  }
 
+  return (
+    <div className="min-h-screen bg-green-800 flex flex-col items-center justify-center p-4"> {/* Added p-4 for general padding */}
+      <h1 className="text-4xl font-bold text-white mb-8 text-center">Party Roulette</h1> {/* Added text-center for good measure */}
       <div
         className="cursor-pointer"
         onClick={handleWheelClick}
@@ -53,6 +87,8 @@ const CasinoRoulette = () => {
           radiusLineWidth={3}
           textDistance={60}
           spinDuration={1.2}
+          width={wheelSize}
+          height={wheelSize}
         />
       </div>
     </div>
