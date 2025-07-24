@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
 
 const casinoData = [
-  { option: '0', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
-  { option: '1', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
-  { option: '2', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
-  { option: '3', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
-  { option: '4', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
-  { option: '5', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
-  { option: '6', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
-  { option: '7', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
-  { option: '8', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
-  { option: '9', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
-  { option: '10', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
-  { option: '11', style: { backgroundColor: '#105015FF', textColor: '#FFFFFF' } },
+  { option: 'Pico', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
+  { option: 'Hostia', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
+  { option: 'IG', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
+  { option: 'Verdad', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
+  { option: 'Baile loco', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
+  { option: 'Flexión', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
+  { option: 'Imitación', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
+  { option: 'Abrazo', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
+  { option: 'Reto', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
+  { option: 'Selfie', style: { backgroundColor: '#DC143C', textColor: '#FFFFFF' } },
+  { option: 'Teléfono', style: { backgroundColor: '#000000', textColor: '#FFFFFF' } },
+  { option: 'Chupito', style: { backgroundColor: '#105015FF', textColor: '#FFFFFF' } },
 ];
 
 const CasinoRoulette = () => {
