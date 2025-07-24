@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { Settings } from 'lucide-react';
 
 const Dice = ({ side, isRolling, diceSides }) => {
@@ -28,7 +29,7 @@ const Dice = ({ side, isRolling, diceSides }) => {
 
 const PartyDiceApp = () => {
   const [currentPath, setCurrentPath] = useState('/');
-  const [isRolling, setIsRolling] = useState(false);
+  const [isRolling, setIsRolling] = useState(true);
   const [currentSide, setCurrentSide] = useState(1);
   const [diceSides, setDiceSides] = useState([
     'Shot', 'Insta', 'Telef', 'Kiss', 'Hug', 'Punch'
@@ -50,16 +51,14 @@ const PartyDiceApp = () => {
     localStorage.setItem('diceSides', JSON.stringify(newSides));
   };
 
-  const rollDice = () => {
-    if (isRolling) return;
-    
-    setIsRolling(true);
-    
-    setTimeout(() => {
+  const handleDiceClick = () => {
+    if (isRolling) {
       const finalSide = Math.floor(Math.random() * 6) + 1;
       setCurrentSide(finalSide);
       setIsRolling(false);
-    }, 2000);
+    } else {
+      setIsRolling(true);
+    }
   };
 
   const AdminPanel = () => {
@@ -84,46 +83,38 @@ const PartyDiceApp = () => {
     };
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black p-4 font-sans">
-        <div className="max-w-md mx-auto">
-          <div className="bg-gray-800 rounded-3xl shadow-2xl p-6 border border-gray-700">
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-2xl font-bold text-white">Admin Panel</h1>
-              <button
-                onClick={() => setCurrentPath('/')}
-                className="bg-gray-700 text-white px-4 py-2 rounded-full font-semibold hover:bg-gray-600 transition-colors"
-              >
-                Back
-              </button>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black p-8 font-sans">
+        <div className="max-w-lg mx-auto">
+          <div className="bg-gray-800 rounded-2xl shadow-2xl p-8 border border-gray-700">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-3xl font-bold text-white">Admin Panel</h1>
+              <Link to="/" className="bg-gray-700 text-white px-6 py-2 rounded-full font-semibold hover:bg-gray-600 transition-colors">Back</Link>
             </div>
             
-            <div className="space-y-4 mb-6">
+            <div className="space-y-6 mb-8">
               {tempSides.map((side, index) => (
-                <div key={index} className="flex items-center space-x-3">
-                  <span className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
-                    {index + 1}
-                  </span>
+                <div key={index}>
                   <input
                     type="text"
                     value={side}
                     onChange={(e) => updateSide(index, e.target.value)}
-                    className="flex-1 px-4 py-3 bg-gray-700 border-2 border-gray-600 rounded-xl focus:border-purple-500 focus:outline-none text-white text-lg"
+                    className="w-full px-5 py-4 bg-gray-700 border-2 border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none text-white text-xl"
                     placeholder={`Side ${index + 1}`}
                   />
                 </div>
               ))}
             </div>
             
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={saveChanges}
-                className="w-full bg-green-500 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-600 transition-colors"
+                className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-lg font-bold text-lg hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105"
               >
                 Save Changes
               </button>
               <button
                 onClick={resetToDefault}
-                className="w-full bg-red-500 text-white py-4 rounded-xl font-bold text-lg hover:bg-red-600 transition-colors"
+                className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-4 rounded-lg font-bold text-lg hover:from-red-600 hover:to-red-700 transition-all transform hover:scale-105"
               >
                 Reset to Default
               </button>
@@ -136,56 +127,26 @@ const PartyDiceApp = () => {
 
   const MainApp = () => (
     <div className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black flex flex-col items-center justify-center p-4 relative font-sans">
-      <button
-        onClick={() => setCurrentPath('/admin')}
-        className="absolute top-4 right-4 bg-white bg-opacity-10 backdrop-blur-sm p-3 rounded-full hover:bg-opacity-20 transition-all"
-      >
-        <Settings size={24} className="text-white" />
-      </button>
-
       <div className="bg-gray-800 rounded-3xl shadow-2xl p-8 max-w-sm w-full text-center border border-gray-700">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent mb-2">
-            🎲 PartyDice
-          </h1>
-          <p className="text-gray-400 text-lg">Let the fun decide!</p>
+          <img src="/party_dice.png" alt="Party Dice Logo" className="mx-auto" />
         </div>
 
-        <div className="mb-8 perspective">
+        <div className="mb-8 perspective" onClick={handleDiceClick}>
           <Dice side={currentSide} isRolling={isRolling} diceSides={diceSides} />
         </div>
-
-        <div className="mb-8">
-          <div className="bg-gradient-to-r from-purple-900 to-pink-900 rounded-2xl p-6">
-            <h2 className="text-2xl font-bold text-white mb-2">
-              {isRolling ? 'Rolling...' : diceSides[currentSide - 1]}
-            </h2>
-            {!isRolling && (
-              <p className="text-gray-400">Side {currentSide}</p>
-            )}
-          </div>
-        </div>
-
-        <button
-          onClick={rollDice}
-          disabled={isRolling}
-          className={`w-full py-4 rounded-xl font-bold text-xl transition-all transform ${
-            isRolling
-              ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-              : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 hover:scale-105 active:scale-95'
-          }`}
-        >
-          {isRolling ? 'Rolling...' : '🎲 Roll the Dice!'}
-        </button>
       </div>
     </div>
   );
 
-  if (currentPath === '/admin') {
-    return <AdminPanel />;
-  }
-
-  return <MainApp />;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainApp />} />
+        <Route path="/admin" element={<AdminPanel />} />
+      </Routes>
+    </Router>
+  );
 };
 
 export default PartyDiceApp;

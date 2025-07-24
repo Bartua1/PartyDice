@@ -24,16 +24,15 @@ body {
 }
 
 .dice.rolling {
-  animation: roll 2s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+  animation: roll 8s linear infinite;
 }
 
 .face {
   position: absolute;
   width: 120px;
   height: 120px;
-  background: linear-gradient(145deg, #7b1fa2, #e91e63);
+  background: #111;
   border: 2px solid white;
-  border-radius: 10px;
   color: white;
   font-size: 1.5rem;
   font-weight: bold;
