@@ -65,7 +65,7 @@ const CasinoRoulette = () => {
 
   return (
     <div className="min-h-screen bg-green-800 flex flex-col items-center justify-center p-4"> {/* Added p-4 for general padding */}
-      <h1 className="text-4xl font-bold text-white mb-8 text-center">Party Roulette</h1> {/* Added text-center for good measure */}
+      <h1 className="text-4xl font-bold text-white mb-8 text-center">Bartuleta</h1> {/* Added text-center for good measure */}
       <div
         className="cursor-pointer"
         onClick={handleWheelClick}
